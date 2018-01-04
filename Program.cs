@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace lists
 {
@@ -35,8 +36,6 @@ namespace lists
                 Console.WriteLine(planet);
             }
 
-
-
             List<Dictionary<string, List<string>>> spacecraft = new List<Dictionary<string, List<string>>>();
 
             // Create Mariner 10 info
@@ -61,13 +60,33 @@ namespace lists
                 "Jupiter", "Saturn", "Uranus", "Neptune"
             };
             Dictionary<string, List<string>> voyager2Dict = new Dictionary<string, List<string>>();
-            voyager2Dict.Add(voyager2, voyager1Destinations);
+            voyager2Dict.Add(voyager2, voyager2Destinations);
 
 
             // Add all dictionaries to spacecraft collection
             spacecraft.Add(mariner10);
             spacecraft.Add(voyager1Dict);
             spacecraft.Add(voyager2Dict);
+
+            foreach (string planet in planetList)
+            {
+                Console.Write(planet);
+
+                List<string> visitedPlanets = new List<string>();
+
+                foreach (Dictionary<string, List<string>> craft in spacecraft)
+                {
+                    foreach (KeyValuePair<string, List<string>> item in craft)
+                    {
+                        if (item.Value.Contains(planet)) {
+                            visitedPlanets.Add(item.Key);
+                        }
+                    }
+                }
+
+                visitedPlanets.ForEach(p => Console.Write($" {p}"));
+                Console.WriteLine();
+            }
         }
     }
 }
